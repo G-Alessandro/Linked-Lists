@@ -114,6 +114,50 @@ class LinkedList {
   toString() {
     console.log('Linked-list:', this.listArray().join(' -> '));
   }
+
+  // Inserts a new node with the provided value at the given index
+  insertAt(value, index) {
+    if (index === 0) {
+      this.prepend(value);
+      return;
+    }
+
+    const newNode = new Node(value);
+    let currentNode = this.head;
+    let prevNode = null;
+    let currentIndex = 0;
+
+    while (currentNode && currentIndex < index) {
+      prevNode = currentNode;
+      currentNode = currentNode.next;
+      currentIndex += 1;
+    }
+
+    if (currentIndex === index) {
+      prevNode.next = newNode;
+      newNode.next = currentNode;
+    } else {
+      this.append(value);
+    }
+  }
+
+  // Removes the node at the given index
+  removeAt(index) {
+    let currentNode = this.head;
+    let prevNode = null;
+    let currentIndex = 0;
+
+    while (currentNode && currentIndex < index) {
+      prevNode = currentNode;
+      currentNode = currentNode.next;
+      currentIndex += 1;
+    }
+
+    if (currentIndex === index) {
+      prevNode.next = currentNode.next;
+      currentNode = null;
+    }
+  }
 }
 
 const linkedList = new LinkedList();
@@ -135,20 +179,7 @@ linkedList.contains(20); // True! 20 is in the list!
 linkedList.contains(50); // False! 50 is not in the list!
 linkedList.find(30); // The index of the value is 3!
 linkedList.find(70); // Value not found!
-
-// const linkedList2 = new LinkedList();
-// linkedList2.append(100); // Linked-List: 10
-// linkedList2.append(200); // Linked-List: 10 -> 20
-// linkedList2.append(300); // Linked-List: 10 -> 20 -> 30
-// linkedList2.append(800); // Linked-List: 10 -> 20 -> 30 -> 40
-// linkedList2.prepend(120); // Linked-List: 60 -> 10 -> 20 -> 30 -> 40
-// linkedList2.toString(); // Linked-List: 60 -> 10 -> 20 -> 30 -> 40
-// linkedList2.size(); // Linked-list size 5
-// linkedList2.getFirst(); // First: 60
-// linkedList2.getLast(); // Last: 40
-// linkedList2.at(3); // In index 3 there is: 30!
-// linkedList2.at(5); // The 5 position does not exist!
-// linkedList2.contains(200); // True! 20 is in the list!
-// linkedList2.contains(500); // False! 50 is not in the list!
-// linkedList2.find(300); // The index of the value is 3!
-// linkedList2.find(700); // Value not found!
+linkedList.insertAt(80, 2); // Linked-List: 60 -> 10 -> 80 -> 20 -> 30
+linkedList.toString(); // Linked-List: 60 -> 10 -> 80 -> 20 -> 30
+linkedList.removeAt(2); // Linked-List: 60 -> 10 -> 20 -> 30
+linkedList.toString(); // Linked-List: 60 -> 10 -> 20 -> 30
